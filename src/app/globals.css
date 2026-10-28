@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -40,11 +42,36 @@ body {
 }
 
 .hero-stagger {
-  animation: hero-fade-in 300ms ease-out both;
+  animation: hero-fade-in 650ms var(--ease-out) both;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
   .hero-stagger {
     animation-name: hero-fade-in-up;
+  }
+
+  .scroll-hint-arrow {
+    animation: scroll-slide-down 3.2s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes scroll-slide-down {
+  0% {
+    transform: translateY(-35%);
+    opacity: 0;
+  }
+  30%,
+  55% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  85%,
+  100% {
+    transform: translateY(40%);
+    opacity: 0;
   }
 }

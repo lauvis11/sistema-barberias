@@ -21,10 +21,14 @@ export function Hero() {
         className="object-cover object-[70%_center] sm:object-center"
       />
 
-      {/* Capa de oscuridad sobre la imagen para dar protagonismo al texto */}
+      {/* Oscurecimiento más intenso a la izquierda y más suave a la derecha */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[#0E0B09]/55 bg-linear-to-r from-[#0E0B09]/90 via-[#0E0B09]/70 to-[#0E0B09]/25"
+        className="pointer-events-none absolute inset-0 bg-linear-to-r from-[#0E0B09]/85 via-[#0E0B09]/60 via-50% to-[#0E0B09]/35"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-[#0E0B09]/85 via-[#0E0B09]/45 to-transparent"
       />
 
       {/* Contenido principal */}
@@ -92,7 +96,7 @@ export function Hero() {
         href="#contenido"
         aria-label="Deslizar hacia abajo"
         style={{ animationDelay: "420ms" }}
-        className="hero-stagger absolute bottom-12 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border border-transparent bg-transparent text-[#F5F0E6] shadow-[0_0_0_2px_oklch(1_0_0/0.45)] transition-[scale,box-shadow,color] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:text-[#C89D54] hover:shadow-[0_0_0_2px_oklch(1_0_0/0.75)] motion-safe:active:scale-[0.96] sm:bottom-14"
+        className="scroll-indicator-enter absolute bottom-12 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border border-transparent bg-transparent text-[#F5F0E6] shadow-[0_0_0_2px_oklch(1_0_0/0.45)] transition-[scale,box-shadow,color] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:text-[#C89D54] hover:shadow-[0_0_0_2px_oklch(1_0_0/0.75)] active:scale-[0.96] sm:bottom-14"
       >
         <svg
           viewBox="0 0 24 24"
@@ -101,7 +105,7 @@ export function Hero() {
           strokeWidth="2.25"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="scroll-hint-arrow h-6 w-6"
+          className="h-6 w-6"
         >
           <path
             d="M12 5v14M6.5 13.5 12 19l5.5-5.5"

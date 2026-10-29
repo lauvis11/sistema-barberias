@@ -47,6 +47,20 @@ html {
   animation: scroll-jump-in 1250ms var(--ease-out) both;
 }
 
+.barber-pole-spin {
+  animation: barber-pole-roll 3.6s linear infinite;
+  will-change: transform;
+}
+
+@keyframes barber-pole-roll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -33.333333%, 0);
+  }
+}
+
 @keyframes scroll-jump-in {
   0% {
     opacity: 0;

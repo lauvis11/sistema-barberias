@@ -93,7 +93,7 @@ export function Hero() {
 
       {/* Indicador de deslizar hacia abajo */}
       <a
-        href="#contenido"
+        href="#servicios"
         aria-label="Deslizar hacia abajo"
         style={{ animationDelay: "420ms" }}
         className="scroll-indicator-enter absolute bottom-12 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border border-transparent bg-transparent text-[#F5F0E6] shadow-[0_0_0_2px_oklch(1_0_0/0.45)] transition-[scale,box-shadow,color] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:text-[#C89D54] hover:shadow-[0_0_0_2px_oklch(1_0_0/0.75)] active:scale-[0.96] sm:bottom-14"

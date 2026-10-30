@@ -113,9 +113,9 @@ export function Servicios() {
     <section
       ref={seccionRef}
       id="servicios"
-      className="relative flex min-h-svh w-full items-center bg-[#242220] pt-12 pb-20 text-[#F5F0E6]"
+      className="relative flex min-h-svh w-full scroll-mt-18 items-center bg-[#242220] pt-8 pb-24 text-[#F5F0E6] sm:scroll-mt-20"
     >
-      <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:-mt-3 lg:px-12">
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 -mt-4 lg:-mt-8 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Izquierda: Barber Pole 3D con giro continuo del cilindro */}
           <div

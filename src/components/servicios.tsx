@@ -2,16 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Cormorant_Garamond, Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import { siteConfig } from "@/config/site.config";
 
 const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["600", "700"],
   display: "swap",
@@ -171,7 +165,7 @@ export function Servicios() {
                 transitionDelay: "80ms",
                 transitionTimingFunction: "var(--ease-out)",
               }}
-              className={`${cormorant.className} text-4xl leading-[1.05] font-semibold tracking-tight text-[#C89D54] transition-[opacity,transform,filter] duration-650 sm:text-5xl ${
+              className={`${cormorant.className} text-4xl leading-[0.98] font-semibold tracking-tight text-[#C89D54] transition-[opacity,transform,filter] duration-650 sm:text-5xl ${
                 visible
                   ? "translate-y-0 opacity-100 blur-0"
                   : "translate-y-4 opacity-0 blur-xs"
@@ -198,7 +192,7 @@ export function Servicios() {
                     }`}
                   >
                     <h3
-                      className={`${playfair.className} text-lg font-bold tracking-wide text-[#C89D54] uppercase`}
+                      className={`${cormorant.className} text-2xl font-semibold text-[#C89D54] sm:text-3xl`}
                     >
                       {bloque.categoria}
                     </h3>
@@ -207,7 +201,7 @@ export function Servicios() {
                       {bloque.items.map((item) => (
                         <li key={item.nombre}>
                           <div className="flex items-baseline gap-3">
-                            <span className="text-base font-semibold text-[#F7F3EB] uppercase">
+                            <span className="text-lg font-semibold text-[#F5F0E6]">
                               {item.nombre}
                             </span>
                             <span
@@ -220,12 +214,12 @@ export function Servicios() {
                                 visible ? "scale-x-100" : "scale-x-0"
                               }`}
                             />
-                            <span className="text-base font-semibold text-[#C89D54] tabular-nums">
+                            <span className="text-lg font-semibold text-[#C89D54] tabular-nums">
                               {item.precio}
                             </span>
                           </div>
 
-                          <p className="mt-0.5 text-xs text-[#B8B2A8]">
+                          <p className="mt-0.5 text-sm leading-normal text-[#B8B2A8]">
                             {item.descripcion}
                           </p>
                         </li>

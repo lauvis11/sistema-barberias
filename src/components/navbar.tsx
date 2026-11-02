@@ -1,22 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Cormorant_Garamond } from "next/font/google";
+import { siteConfig } from "@/config/site.config";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["600", "700"],
   display: "swap",
 });
-
-const navItems = [
-  { id: "inicio", label: "Inicio", href: "#" },
-  { id: "servicios", label: "Servicios", href: "#servicios" },
-  { id: "galeria", label: "Galería", href: "#galeria" },
-  { id: "turnos", label: "Turnos", href: "#turnos" },
-  { id: "productos", label: "Productos", href: "#productos" },
-  { id: "contacto", label: "Contacto", href: "#contacto" },
-];
 
 export function Navbar() {
   const [conScroll, setConScroll] = useState(false);
@@ -28,16 +21,31 @@ export function Navbar() {
       const scrollY = window.scrollY;
       setConScroll(scrollY > 0);
 
+      // Si estamos arriba del todo, es inicio
+      if (scrollY < 100) {
+        setSeccionActiva("inicio");
+        return;
+      }
+
+      // Si estamos cerca del fondo de la página, activa la última sección
+      if (
+        window.innerHeight + scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        setSeccionActiva(siteConfig.nav[siteConfig.nav.length - 1].id);
+        return;
+      }
+
       const puntoReferencia = window.innerHeight * 0.38;
       let actual = "inicio";
 
-      for (const item of navItems) {
+      for (const item of siteConfig.nav) {
         if (item.id === "inicio") continue;
         const elemento = document.getElementById(item.id);
         if (!elemento) continue;
 
         const rect = elemento.getBoundingClientRect();
-        if (rect.top <= puntoReferencia && rect.bottom > 120) {
+        if (rect.top <= puntoReferencia && rect.bottom > 80) {
           actual = item.id;
         }
       }
@@ -59,11 +67,49 @@ export function Navbar() {
     };
   }, []);
 
+  // Bloqueo de scroll y actualización de sección activa al abrir el menú móvil
   useEffect(() => {
     document.body.style.overflow = menuAbierto ? "hidden" : "";
+    if (menuAbierto) {
+      const scrollY = window.scrollY;
+      if (scrollY < 100) {
+        setSeccionActiva("inicio");
+      } else if (
+        window.innerHeight + scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        setSeccionActiva(siteConfig.nav[siteConfig.nav.length - 1].id);
+      } else {
+        const puntoReferencia = window.innerHeight * 0.38;
+        let actual = "inicio";
+        for (const item of siteConfig.nav) {
+          if (item.id === "inicio") continue;
+          const elemento = document.getElementById(item.id);
+          if (!elemento) continue;
+
+          const rect = elemento.getBoundingClientRect();
+          if (rect.top <= puntoReferencia && rect.bottom > 80) {
+            actual = item.id;
+          }
+        }
+        setSeccionActiva(actual);
+      }
+    }
     return () => {
       document.body.style.overflow = "";
     };
+  }, [menuAbierto]);
+
+  // Cierre con la tecla Escape para accesibilidad
+  useEffect(() => {
+    const manejarEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && menuAbierto) {
+        setMenuAbierto(false);
+      }
+    };
+
+    window.addEventListener("keydown", manejarEscape);
+    return () => window.removeEventListener("keydown", manejarEscape);
   }, [menuAbierto]);
 
   return (
@@ -78,216 +124,208 @@ export function Navbar() {
           conScroll ? "h-18 sm:h-20" : "h-20 sm:h-24"
         }`}
       >
-        {/* Izquierda: Marca (se oculta en móvil al abrir el menú porque pasa debajo de los enlaces) */}
+        {/* Izquierda: Logo (texto o imagen según siteConfig) */}
         <a
           href="#"
-          className={`${cormorant.className} text-2xl leading-none font-semibold tracking-tight text-white transition-opacity duration-200 sm:text-3xl ${
+          className={`text-white transition-opacity duration-200 ${
             menuAbierto
               ? "pointer-events-none opacity-0 md:pointer-events-auto md:opacity-100"
               : "opacity-100"
           }`}
         >
-          Sistema Barberias
+          {siteConfig.logo ? (
+            <Image
+              src={siteConfig.logo}
+              alt={siteConfig.name}
+              width={140}
+              height={40}
+              className="h-9 w-auto object-contain"
+              priority
+            />
+          ) : (
+            <span
+              className={`${cormorant.className} text-2xl leading-none font-semibold tracking-tight sm:text-3xl`}
+            >
+              {siteConfig.name}
+            </span>
+          )}
         </a>
 
-        {/* Centro (escritorio): Enlaces */}
-        <ul className="hidden items-center gap-8 md:flex lg:gap-10">
-          {navItems.map((item) => {
-            const esActivo = seccionActiva === item.id;
+        {/* Derecha: Tanto los enlaces de navegación como el botón agrupados y desplazados hacia la derecha */}
+        <div className="flex items-center gap-6 sm:gap-7 lg:gap-8 md:translate-x-6 lg:translate-x-10">
+          <ul className="hidden items-center gap-6 md:flex lg:gap-8">
+            {siteConfig.nav.map((item) => {
+              const esActivo = seccionActiva === item.id;
 
-            return (
-              <li key={item.id}>
-                <a
-                  href={item.href}
-                  aria-current={esActivo ? "page" : undefined}
-                  onClick={() => setSeccionActiva(item.id)}
-                  className={`group relative inline-block py-1.5 text-base font-medium transition-[color,transform] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C89D54] ${
-                    esActivo
-                      ? "-translate-y-0.5 text-[#C89D54]"
-                      : "text-white hover:text-white"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <span
-                    aria-hidden="true"
-                    className={`pointer-events-none absolute bottom-0 left-0 h-0.5 bg-[#C89D54] transition-[width,opacity] duration-300 ease-out ${
+              return (
+                <li key={item.id}>
+                  <a
+                    href={item.href}
+                    aria-current={esActivo ? "page" : undefined}
+                    onClick={() => setSeccionActiva(item.id)}
+                    className={`group relative inline-block py-1.5 font-sans text-[13px] font-semibold tracking-wider uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marron ${
                       esActivo
-                        ? "w-full opacity-100"
-                        : "w-0 opacity-80 group-hover:w-full"
+                        ? "text-marron"
+                        : "text-white hover:text-marron"
                     }`}
-                  />
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+                  >
+                    <span>{item.label}</span>
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none absolute bottom-0 left-0 h-0.5 bg-marron transition-[width,opacity] duration-300 ease-out ${
+                        esActivo
+                          ? "w-full opacity-100"
+                          : "w-0 opacity-80 group-hover:w-full"
+                      }`}
+                    />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
 
-        {/* Derecha (escritorio): Botón "Haz tu reserva" */}
-        <div className="hidden md:flex md:items-center">
+          {/* Botón con borde marrón fino sin relleno que va a /reservar */}
           <a
-            href="#turnos"
-            className="inline-flex h-11 items-center justify-center gap-2.5 rounded-lg bg-[#C89D54] px-5 font-sans text-base font-semibold text-[#120F0D] transition-[background-color,scale] duration-150 ease-out [-webkit-tap-highlight-color:transparent] hover:bg-[#D4AB63] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C89D54]"
+            href={siteConfig.hero.cta.href}
+            className="group hidden items-center gap-2 rounded border border-marron bg-transparent px-4.5 py-2 font-sans text-[13px] font-semibold tracking-wider text-marron uppercase transition-colors duration-250 hover:bg-marron hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron md:inline-flex"
           >
-            <span>Haz tu reserva</span>
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.85"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4 shrink-0 text-[#120F0D]"
-            >
-              <rect
-                x="2"
-                y="3"
-                width="12"
-                height="11"
-                rx="2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M5 1.5v2.5M11 1.5v2.5M2 6.5h12"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
+            <span>{siteConfig.hero.cta.label}</span>
           </a>
+
+          {/* Botón hamburguesa (móvil) */}
+          <button
+            type="button"
+            aria-label={menuAbierto ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+            aria-expanded={menuAbierto}
+            aria-controls="menu-movil"
+            onClick={() => setMenuAbierto(!menuAbierto)}
+            className="relative z-50 flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-[#F5F0E6] transition-colors duration-200 hover:text-marron focus-visible:outline-2 focus-visible:outline-marron md:hidden"
+          >
+            <span className="sr-only">
+              {menuAbierto ? "Cerrar menú" : "Abrir menú"}
+            </span>
+            <div className="relative h-4 w-5">
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 block h-0.5 w-5 bg-current transition-all duration-300 ease-out ${
+                  menuAbierto ? "top-2 rotate-45" : "top-0.5"
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute top-2 left-0 block h-0.5 w-5 bg-current transition-opacity duration-200 ${
+                  menuAbierto ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 block h-0.5 w-5 bg-current transition-all duration-300 ease-out ${
+                  menuAbierto ? "top-2 -rotate-45" : "top-3.5"
+                }`}
+              />
+            </div>
+          </button>
         </div>
-
-        {/* Derecha (móvil): Botón ícono de menú hamburguesa con cross-fade (better-ui) */}
-        <button
-          type="button"
-          aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={menuAbierto}
-          aria-controls="menu-movil-principal"
-          onClick={() => setMenuAbierto((prev) => !prev)}
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-lg text-white transition-transform duration-150 ease-out [-webkit-tap-highlight-color:transparent] enabled:active:scale-[0.96] md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C89D54]"
-        >
-          {/* Ícono Hamburguesa */}
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            className={`absolute h-7 w-7 transition-[scale,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0,0,1)] ${
-              menuAbierto
-                ? "scale-25 opacity-0 blur-xs"
-                : "scale-100 opacity-100 blur-0"
-            }`}
-          >
-            <path d="M4 7h16M4 12h16M4 17h16" vectorEffect="non-scaling-stroke" />
-          </svg>
-
-          {/* Ícono Cerrar (X) */}
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            className={`absolute h-7 w-7 text-[#C89D54] transition-[scale,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0,0,1)] ${
-              menuAbierto
-                ? "scale-100 opacity-100 blur-0"
-                : "scale-25 opacity-0 blur-xs"
-            }`}
-          >
-            <path d="M6 6l12 12M18 6L6 18" vectorEffect="non-scaling-stroke" />
-          </svg>
-        </button>
       </nav>
 
-      {/* Menú móvil a pantalla completa con animación de apertura y cierre escalonado */}
+      {/* Menú móvil desplegable a pantalla completa */}
       <div
-        id="menu-movil-principal"
-        aria-hidden={!menuAbierto}
-        style={{
-          transitionDelay: menuAbierto ? "0ms" : "170ms",
-        }}
-        className={`fixed inset-0 z-40 flex min-h-svh flex-col items-center justify-start overflow-y-auto overscroll-contain bg-[#120F0D]/65 px-6 pt-18 pb-10 text-center backdrop-blur-md transition-[translate,opacity] duration-850 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-10 md:hidden ${
+        id="menu-movil"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú principal de navegación"
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-center overflow-y-auto bg-[#120F0D]/98 px-6 py-12 backdrop-blur-md transition-all duration-500 ease-out md:hidden ${
           menuAbierto
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-full opacity-0"
         }`}
       >
-        {/* 1. Elementos de navegación centrados más arriba */}
-        <ul className="flex flex-col items-center gap-3.5">
-          {navItems.map((item, idx) => {
-            const esActivo = seccionActiva === item.id;
-            const totalPasos = navItems.length + 2;
-            const delayApertura = 80 + idx * 50;
-            const delayCierre = (totalPasos - 1 - idx) * 30;
+        <div className="my-auto flex w-full max-w-xs flex-col items-center">
+          {/* 1. Elementos de navegación centrados con resaltado de la sección actual en marrón */}
+          <ul className="flex flex-col items-center gap-4">
+            {siteConfig.nav.map((item, idx) => {
+              const esActivo = seccionActiva === item.id;
+              const totalPasos = siteConfig.nav.length + 2;
+              const delayApertura = 80 + idx * 50;
+              const delayCierre = (totalPasos - 1 - idx) * 30;
 
-            return (
-              <li
-                key={item.id}
-                style={{
-                  transitionDelay: menuAbierto
-                    ? `${delayApertura}ms`
-                    : `${delayCierre}ms`,
-                }}
-                className={`transition-[translate,scale,opacity,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  menuAbierto
-                    ? "translate-y-0 scale-100 opacity-100 blur-0"
-                    : "-translate-y-4 scale-95 opacity-0 blur-xs"
-                }`}
-              >
-                <a
-                  href={item.href}
-                  tabIndex={menuAbierto ? 0 : -1}
-                  aria-current={esActivo ? "page" : undefined}
-                  onClick={() => {
-                    setSeccionActiva(item.id);
-                    setMenuAbierto(false);
+              return (
+                <li
+                  key={item.id}
+                  style={{
+                    transitionDelay: menuAbierto
+                      ? `${delayApertura}ms`
+                      : `${delayCierre}ms`,
                   }}
-                  className={`group relative inline-block py-1.5 font-sans text-xl font-medium transition-colors duration-200 ${
-                    esActivo
-                      ? "text-[#C89D54]"
-                      : "text-white hover:text-[#C89D54]"
+                  className={`transition-[translate,scale,opacity,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    menuAbierto
+                      ? "translate-y-0 scale-100 opacity-100 blur-0"
+                      : "-translate-y-4 scale-95 opacity-0 blur-xs"
                   }`}
                 >
-                  <span>{item.label}</span>
-                  <span
-                    aria-hidden="true"
-                    className={`pointer-events-none absolute bottom-0 left-0 h-0.5 bg-[#C89D54] transition-[width,opacity] duration-300 ease-out ${
-                      esActivo ? "w-full opacity-100" : "w-0 opacity-0"
+                  <a
+                    href={item.href}
+                    tabIndex={menuAbierto ? 0 : -1}
+                    aria-current={esActivo ? "page" : undefined}
+                    onClick={() => {
+                      setSeccionActiva(item.id);
+                      setMenuAbierto(false);
+                    }}
+                    className={`group relative inline-block py-1.5 font-sans text-[21px] uppercase tracking-wider transition-colors duration-200 ${
+                      esActivo
+                        ? "font-semibold text-marron"
+                        : "font-medium text-white hover:text-marron"
                     }`}
-                  />
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+                  >
+                    <span>{item.label}</span>
+                    {/* Línea inferior en marrón para la sección activa */}
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none absolute bottom-0 left-0 h-0.5 bg-marron transition-[width,opacity] duration-300 ease-out ${
+                        esActivo ? "w-full opacity-100" : "w-0 opacity-0"
+                      }`}
+                    />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
 
-        {/* 2. Marca del local ("Sistema Barberias") debajo de los elementos + 3. Botón al final */}
-        <div className="flex w-full flex-col items-center">
+          {/* 2. Logo del local con mayor height y presencia vertical */}
           <div
             style={{
               transitionDelay: menuAbierto
-                ? `${80 + navItems.length * 50}ms`
+                ? `${80 + siteConfig.nav.length * 50}ms`
                 : "30ms",
             }}
-            className={`my-20 transition-[translate,scale,opacity,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`my-16 flex min-h-35 items-center justify-center py-4 transition-[translate,scale,opacity,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:my-20 ${
               menuAbierto
                 ? "translate-y-0 scale-100 opacity-100 blur-0"
                 : "-translate-y-4 scale-95 opacity-0 blur-xs"
             }`}
           >
-            <span
-              className={`${cormorant.className} block text-3xl leading-none font-semibold tracking-tight text-white`}
-            >
-              Sistema Barberias
-            </span>
+            {siteConfig.logo ? (
+              <Image
+                src={siteConfig.logo}
+                alt={siteConfig.name}
+                width={360}
+                height={140}
+                className="h-28 w-auto object-contain sm:h-36"
+              />
+            ) : (
+              <span
+                className={`${cormorant.className} block text-center text-6xl leading-[0.95] font-semibold tracking-tight text-white sm:text-7xl`}
+              >
+                {siteConfig.name}
+              </span>
+            )}
           </div>
 
+          {/* 3. Botón de reservar con espaciado equilibrado respecto al logo */}
           <div
             style={{
               transitionDelay: menuAbierto
-                ? `${80 + (navItems.length + 1) * 50}ms`
+                ? `${80 + (siteConfig.nav.length + 1) * 50}ms`
                 : "0ms",
             }}
             className={`w-full max-w-56 transition-[translate,scale,opacity,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -297,34 +335,12 @@ export function Navbar() {
             }`}
           >
             <a
-              href="#turnos"
+              href={siteConfig.hero.cta.href}
               tabIndex={menuAbierto ? 0 : -1}
               onClick={() => setMenuAbierto(false)}
-              className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-[#C89D54] px-5 font-sans text-base font-semibold text-[#120F0D] transition-[background-color,scale] duration-150 ease-out [-webkit-tap-highlight-color:transparent] hover:bg-[#D4AB63] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C89D54]"
+              className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded border border-marron bg-transparent px-5 font-sans text-sm font-semibold tracking-wider text-marron uppercase transition-colors duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:bg-marron hover:text-black active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
             >
-              <span>Haz tu reserva</span>
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.85"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4 shrink-0 text-[#120F0D]"
-              >
-                <rect
-                  x="2"
-                  y="3"
-                  width="12"
-                  height="11"
-                  rx="2"
-                  vectorEffect="non-scaling-stroke"
-                />
-                <path
-                  d="M5 1.5v2.5M11 1.5v2.5M2 6.5h12"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
+              <span>{siteConfig.hero.cta.label}</span>
             </a>
           </div>
         </div>

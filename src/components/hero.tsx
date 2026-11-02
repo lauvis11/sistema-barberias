@@ -1,118 +1,165 @@
 import Image from "next/image";
-import { Cormorant_Garamond } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { siteConfig } from "@/config/site.config";
 
-const cormorant = Cormorant_Garamond({
+const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["700"],
   display: "swap",
 });
 
+function IconoRedSocial({ red }: { red: string }) {
+  if (red === "facebook") {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+        className="h-6 w-6"
+      >
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      </svg>
+    );
+  }
+
+  if (red === "tiktok") {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+        className="h-6 w-6"
+      >
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.3 0 .58.05.85.13V11.4a6.34 6.34 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.2 8.2 0 0 0 4.77 1.52v-3.4a4.84 4.84 0 0 1-1-.14Z" />
+      </svg>
+    );
+  }
+
+  // instagram (defecto)
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-6 w-6"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
 export function Hero() {
   return (
-    <section className="relative flex min-h-svh w-full items-center overflow-hidden bg-[#0E0B09] text-[#F5F0E6]">
-      {/* Imagen de fondo */}
-      <Image
-        src="/imagen-barberia-hero.jpg"
-        alt={siteConfig.name}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-[70%_center] sm:object-center"
-      />
+    <section className="relative flex min-h-dvh w-full items-center overflow-hidden bg-black text-[#F5F0E6]">
+      {/* Fondo: imagen nueva de public alineada a la derecha, decorativa, con prioridad de carga */}
+      {siteConfig.hero.image && (
+        <Image
+          src={siteConfig.hero.image}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-right md:object-[82%_center]"
+        />
+      )}
 
-      {/* Oscurecimiento más intenso a la izquierda y más suave a la derecha */}
+      {/* Sombra de fondo muy sutil para dar profundidad y contraste sin oscurecer al sujeto */}
+      {/* 1. En celular: oscurecimiento muy leve */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-linear-to-r from-[#0E0B09]/85 via-[#0E0B09]/60 via-50% to-[#0E0B09]/35"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-[#0E0B09]/85 via-[#0E0B09]/45 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-black/40 md:hidden"
       />
 
-      {/* Contenido principal */}
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-20 sm:px-10 lg:px-12">
+      {/* 2. En escritorio: degradado muy suave de izquierda a derecha */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden bg-linear-to-r from-black/60 via-black/20 via-45% to-transparent md:block"
+      />
+
+      {/* 3. Sombra superior muy tenue bajo el navbar */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-black/35 to-transparent"
+      />
+
+      {/* Contenido principal alineado a la izquierda y centrado verticalmente */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-28 sm:px-10 lg:px-12">
         <div className="max-w-lg lg:max-w-xl">
-          <h1
-            style={{ animationDelay: "0ms" }}
-            className={`${cormorant.className} hero-stagger text-5xl leading-[1.02] font-semibold tracking-[-0.015em] text-[#F7F3EB] drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)] sm:text-6xl lg:text-[4.25rem]`}
-          >
-            {siteConfig.tagline}
-          </h1>
-
+          {/* 1. Etiqueta superior en mayúsculas, texto chico, espaciado entre letras, en gris claro */}
           <p
-            style={{ animationDelay: "140ms" }}
-            className="hero-stagger mt-5 max-w-[44ch] text-base leading-relaxed text-[#DFD7CC] drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-lg"
+            style={{ animationDelay: "0ms" }}
+            className="hero-stagger font-sans text-xs font-semibold tracking-[0.22em] text-neutral-400 uppercase sm:text-sm"
           >
-            {siteConfig.description} Elegí tu barbero, consultá disponibilidad en vivo y asegurá tu lugar sin esperas.
+            {siteConfig.hero.badge}
           </p>
 
-          <div
-            style={{ animationDelay: "280ms" }}
-            className="hero-stagger mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center"
+          {/* 2. Título h1 en dos líneas, mayúsculas, tipografía condensada, escalable desde 48px hasta 96px */}
+          <h1
+            style={{ animationDelay: "100ms" }}
+            className={`${oswald.className} hero-stagger mt-3 text-[48px] leading-[0.92] font-bold tracking-tight text-white uppercase sm:text-7xl md:text-8xl lg:text-[96px]`}
           >
-            <button
-              type="button"
-              className="inline-flex h-12 items-center justify-center gap-2.5 rounded-xl border border-transparent bg-[#C89D54] ps-6 pe-5.5 text-base font-semibold text-[#14110F] shadow-[0_0_0_1px_oklch(1_0_0/0.2),0_8px_20px_oklch(0_0_0/0.5)] transition-[scale,background-color,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:bg-[#D4AB63] motion-safe:enabled:active:scale-[0.96]"
+            <span className="block">{siteConfig.hero.titleLine1}</span>
+            <span className="block">{siteConfig.hero.titleLine2}</span>
+          </h1>
+
+          {/* 3. Descripción en gris claro, tamaño normal, ancho limitado */}
+          <p
+            style={{ animationDelay: "200ms" }}
+            className="hero-stagger mt-5 max-w-[44ch] text-base leading-relaxed text-neutral-300 sm:text-lg"
+          >
+            {siteConfig.hero.description}
+          </p>
+
+          {/* 4. Botón principal con borde marrón fino sin relleno, en hover se rellena de marrón con texto negro */}
+          <div
+            style={{ animationDelay: "300ms" }}
+            className="hero-stagger mt-8"
+          >
+            <a
+              href={siteConfig.hero.cta.href}
+              className="group inline-flex items-center gap-3.5 rounded border border-marron bg-transparent px-7 py-3.5 font-sans text-xs font-semibold tracking-widest text-marron uppercase transition-colors duration-250 active:scale-[0.98] hover:bg-marron hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron sm:text-sm"
             >
-              <span>Reservar mi turno</span>
+              <span>{siteConfig.hero.cta.label}</span>
               <svg
-                viewBox="0 0 16 16"
+                viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-4 w-4 shrink-0"
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0 transition-transform duration-250 ease-out group-hover:translate-x-1.5"
               >
-                <rect
-                  x="2"
-                  y="3"
-                  width="12"
-                  height="11"
-                  rx="2"
-                  vectorEffect="non-scaling-stroke"
-                />
-                <path
-                  d="M5 1.5v2.5M11 1.5v2.5M2 6.5h12"
-                  vectorEffect="non-scaling-stroke"
-                />
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
               </svg>
-            </button>
+            </a>
+          </div>
 
-            <button
-              type="button"
-              className="inline-flex h-12 items-center justify-center rounded-xl border border-transparent bg-[#14110F]/75 px-5 text-base font-medium text-[#F5F0E6] shadow-[0_0_0_1px_oklch(1_0_0/0.16)] backdrop-blur-sm transition-[scale,background-color,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:bg-[#14110F]/90 hover:shadow-[0_0_0_1px_oklch(1_0_0/0.26)] motion-safe:enabled:active:scale-[0.96]"
-            >
-              Carta de servicios
-            </button>
+          {/* 5. Fila de íconos de redes sociales desplazada más abajo con escalonamiento individual */}
+          <div className="mt-14 sm:mt-16 flex items-center gap-6">
+            {siteConfig.social.map((item, idx) => (
+              <a
+                key={item.red}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.label}
+                style={{ animationDelay: `${400 + idx * 75}ms` }}
+                className="hero-stagger text-white/80 transition-colors duration-200 hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              >
+                <IconoRedSocial red={item.red} />
+              </a>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Indicador de deslizar hacia abajo */}
-      <a
-        href="#servicios"
-        aria-label="Deslizar hacia abajo"
-        style={{ animationDelay: "420ms" }}
-        className="scroll-indicator-enter absolute bottom-12 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border border-transparent bg-transparent text-[#F5F0E6] shadow-[0_0_0_2px_oklch(1_0_0/0.45)] transition-[scale,box-shadow,color] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:text-[#C89D54] hover:shadow-[0_0_0_2px_oklch(1_0_0/0.75)] active:scale-[0.96] sm:bottom-14"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.25"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-6 w-6"
-        >
-          <path
-            d="M12 5v14M6.5 13.5 12 19l5.5-5.5"
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-      </a>
     </section>
   );
 }

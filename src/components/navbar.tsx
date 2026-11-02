@@ -151,8 +151,8 @@ export function Navbar() {
           )}
         </a>
 
-        {/* Derecha: Tanto los enlaces de navegación como el botón agrupados y desplazados hacia la derecha */}
-        <div className="flex items-center gap-6 sm:gap-7 lg:gap-8 md:translate-x-6 lg:translate-x-10">
+        {/* Derecha: Tanto los enlaces de navegación como el botón agrupados hacia la derecha */}
+        <div className="flex items-center gap-6 sm:gap-7 lg:gap-8">
           <ul className="hidden items-center gap-6 md:flex lg:gap-8">
             {siteConfig.nav.map((item) => {
               const esActivo = seccionActiva === item.id;

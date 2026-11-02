@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #f5f0e6;
+  --color-marron: #c89d54;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-marron: #c89d54;
+  --font-sans: var(--font-barlow), sans-serif;
+  --font-condensed: var(--font-barlow-condensed), sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,6 +37,13 @@ html {
   html {
     scroll-behavior: auto;
   }
+
+  .hero-stagger {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }
 
 @keyframes hero-fade-in-up {
@@ -42,6 +51,11 @@ html {
     opacity: 0;
     transform: translateY(12px);
     filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 

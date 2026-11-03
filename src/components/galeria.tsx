@@ -84,16 +84,21 @@ export function Galeria() {
       id="galeria"
       className="relative flex w-full flex-col bg-[#0A0A0A] px-4 pt-6 pb-10 text-[#F5F0E6] sm:px-8 sm:pt-8 sm:pb-12 lg:h-dvh lg:max-h-dvh lg:overflow-hidden lg:px-12 lg:py-0 scroll-mt-16"
     >
-      {/* Efecto de niebla cálida marrón que se desvanece desde el top hacia abajo */}
+      {/* Imagen decorativa de fondo con oscurecimiento */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 sm:h-96 md:h-110 overflow-hidden"
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
       >
-        {/* Capa de bruma difusa ambiental */}
-        <div className="absolute inset-x-0 top-0 h-48 sm:h-64 bg-[linear-gradient(180deg,rgba(200,157,84,0.18)_0%,rgba(200,157,84,0.06)_60%,transparent_100%)] blur-2xl sm:blur-3xl" />
-        {/* Manto de niebla lineal continuo desvaneciéndose hacia abajo */}
-        <div className="absolute inset-x-0 top-0 h-full bg-[linear-gradient(180deg,rgba(200,157,84,0.16)_0%,rgba(200,157,84,0.08)_35%,rgba(200,157,84,0.02)_70%,transparent_100%)]" />
+        <Image
+          src="/imagen-barberia-hero.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-30 brightness-70 contrast-105"
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-[#0A0A0A]/85 via-[#0A0A0A]/70 to-[#0A0A0A]/90" />
       </div>
+
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl xl:max-w-295 flex-col justify-center lg:justify-start lg:pt-14 xl:pt-16">
         {/* 1. Título a la izquierda en formato natural */}

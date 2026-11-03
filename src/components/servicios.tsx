@@ -2,14 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Cormorant_Garamond } from "next/font/google";
 import { siteConfig } from "@/config/site.config";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-});
 
 const cartaCategorias = [
   {
@@ -113,9 +106,24 @@ export function Servicios() {
     <section
       ref={seccionRef}
       id="servicios"
-      className="relative flex min-h-svh w-full scroll-mt-18 items-center bg-[#242220] pt-8 pb-24 text-[#F5F0E6] sm:scroll-mt-20"
+      className="relative flex min-h-svh w-full scroll-mt-18 items-center overflow-hidden bg-[#242220] pt-8 pb-24 text-[#F5F0E6] sm:scroll-mt-20"
     >
-      <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 -mt-4 lg:-mt-8 lg:px-12">
+      {/* Imagen decorativa de fondo con oscurecimiento para preservar contraste y legibilidad */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
+      >
+        <Image
+          src="/imagen-barberia-hero.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-35 brightness-75 contrast-110"
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-[#242220]/80 via-[#242220]/65 to-[#242220]/85" />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-10 -mt-4 lg:-mt-8 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Izquierda: Barber Pole 3D con giro continuo del cilindro */}
           <div
@@ -165,7 +173,7 @@ export function Servicios() {
                 transitionDelay: "80ms",
                 transitionTimingFunction: "var(--ease-out)",
               }}
-              className={`${cormorant.className} text-4xl leading-[0.98] font-semibold tracking-tight text-[#C89D54] transition-[opacity,transform,filter] duration-650 sm:text-5xl ${
+              className={`font-condensed text-4xl leading-tight font-bold tracking-tight text-marron uppercase transition-[opacity,transform,filter] duration-650 sm:text-5xl lg:text-6xl ${
                 visible
                   ? "translate-y-0 opacity-100 blur-0"
                   : "translate-y-4 opacity-0 blur-xs"
@@ -191,9 +199,7 @@ export function Servicios() {
                         : "translate-y-4 opacity-0 blur-xs"
                     }`}
                   >
-                    <h3
-                      className={`${cormorant.className} text-2xl font-semibold text-[#C89D54] sm:text-3xl`}
-                    >
+                    <h3 className="font-condensed text-xl font-bold uppercase tracking-wider text-marron sm:text-2xl">
                       {bloque.categoria}
                     </h3>
 
@@ -201,7 +207,7 @@ export function Servicios() {
                       {bloque.items.map((item) => (
                         <li key={item.nombre}>
                           <div className="flex items-baseline gap-3">
-                            <span className="text-lg font-semibold text-[#F5F0E6]">
+                            <span className="font-sans text-base font-semibold text-[#F5F0E6] sm:text-lg">
                               {item.nombre}
                             </span>
                             <span
@@ -214,12 +220,12 @@ export function Servicios() {
                                 visible ? "scale-x-100" : "scale-x-0"
                               }`}
                             />
-                            <span className="text-lg font-semibold text-[#C89D54] tabular-nums">
+                            <span className="font-sans text-base font-semibold text-marron tabular-nums sm:text-lg">
                               {item.precio}
                             </span>
                           </div>
 
-                          <p className="mt-0.5 text-sm leading-normal text-[#B8B2A8]">
+                          <p className="mt-0.5 font-sans text-xs leading-normal text-[#B8B2A8] sm:text-sm">
                             {item.descripcion}
                           </p>
                         </li>

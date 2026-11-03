@@ -112,18 +112,18 @@ export function Galeria() {
               type="button"
               onClick={() => abrirModal(0)}
               aria-label={`Ver trabajo 1: ${fotosGaleria[0].alt}`}
-              className="group relative h-[38%] min-h-22.5 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              className="group relative h-[38%] min-h-22.5 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
             >
               <Image
                 src={fotosGaleria[0].src}
                 alt={fotosGaleria[0].alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                className="object-cover object-center grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
               />
             </button>
 
@@ -136,18 +136,18 @@ export function Galeria() {
                   type="button"
                   onClick={() => abrirModal(1)}
                   aria-label={`Ver trabajo 2: ${fotosGaleria[1].alt}`}
-                  className="group relative h-1/2 min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                  className="group relative h-1/2 min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
                 >
                   <Image
                     src={fotosGaleria[1].src}
                     alt={fotosGaleria[1].alt}
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
-                    className="object-cover object-[center_20%] grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                    className="object-cover object-[center_20%] grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                   />
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                    className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                   />
                 </button>
 
@@ -156,18 +156,18 @@ export function Galeria() {
                   type="button"
                   onClick={() => abrirModal(2)}
                   aria-label={`Ver trabajo 3: ${fotosGaleria[2].alt}`}
-                  className="group relative h-1/2 min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                  className="group relative h-1/2 min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
                 >
                   <Image
                     src={fotosGaleria[2].src}
                     alt={fotosGaleria[2].alt}
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
-                    className="object-cover object-center grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                    className="object-cover object-center grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                   />
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                    className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                   />
                 </button>
               </div>
@@ -177,18 +177,18 @@ export function Galeria() {
                 type="button"
                 onClick={() => abrirModal(3)}
                 aria-label={`Ver trabajo 4: ${fotosGaleria[3].alt}`}
-                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
               >
                 <Image
                   src={fotosGaleria[3].src}
                   alt={fotosGaleria[3].alt}
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-[center_35%] grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                  className="object-cover object-[center_35%] grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                  className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                 />
               </button>
             </div>
@@ -203,18 +203,18 @@ export function Galeria() {
                 type="button"
                 onClick={() => abrirModal(4)}
                 aria-label={`Ver trabajo 5: ${fotosGaleria[4].alt}`}
-                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
               >
                 <Image
                   src={fotosGaleria[4].src}
                   alt={fotosGaleria[4].alt}
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-[left_center] grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                  className="object-cover object-[80%_center] grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                  className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                 />
               </button>
 
@@ -223,18 +223,18 @@ export function Galeria() {
                 type="button"
                 onClick={() => abrirModal(5)}
                 aria-label={`Ver trabajo 6: ${fotosGaleria[5].alt}`}
-                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
               >
                 <Image
                   src={fotosGaleria[5].src}
                   alt={fotosGaleria[5].alt}
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-[center_top] grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                  className="object-cover object-[center_25%] grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                  className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                 />
               </button>
             </div>
@@ -244,18 +244,18 @@ export function Galeria() {
               type="button"
               onClick={() => abrirModal(6)}
               aria-label={`Ver trabajo 7: ${fotosGaleria[6].alt}`}
-              className="group relative h-[38%] min-h-22.5 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+              className="group relative h-[38%] min-h-22.5 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
             >
               <Image
                 src={fotosGaleria[6].src}
                 alt={fotosGaleria[6].alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                className="object-cover object-center grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
               />
             </button>
 
@@ -266,18 +266,18 @@ export function Galeria() {
                 type="button"
                 onClick={() => abrirModal(7)}
                 aria-label={`Ver trabajo 8: ${fotosGaleria[7].alt}`}
-                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
               >
                 <Image
                   src={fotosGaleria[7].src}
                   alt={fotosGaleria[7].alt}
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-[center_bottom] grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                  className="object-cover object-[center_25%] grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                  className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                 />
               </button>
 
@@ -286,18 +286,18 @@ export function Galeria() {
                 type="button"
                 onClick={() => abrirModal(8)}
                 aria-label={`Ver trabajo 9: ${fotosGaleria[8].alt}`}
-                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-inset ring-white/10 transition-[transform,box-shadow] duration-250 ease-out [-webkit-tap-highlight-color:transparent] hover:ring-white/25 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                className="group relative h-full min-h-0 w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 transition-transform duration-300 ease-out [-webkit-tap-highlight-color:transparent] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
               >
                 <Image
                   src={fotosGaleria[8].src}
                   alt={fotosGaleria[8].alt}
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-center grayscale contrast-110 brightness-95 transition-[transform,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105"
+                  className="object-cover object-center grayscale contrast-110 brightness-95 transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-105 will-change-transform"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/25 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.35)]"
+                  className="pointer-events-none absolute inset-0 bg-black/10 transition-colors duration-500 ease-out group-hover:bg-transparent"
                 />
               </button>
             </div>

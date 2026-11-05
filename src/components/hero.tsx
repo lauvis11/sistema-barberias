@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Oswald } from "next/font/google";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site.config";
 
 const oswald = Oswald({
@@ -55,75 +58,148 @@ function IconoRedSocial({ red }: { red: string }) {
 }
 
 export function Hero() {
+  const seccionRef = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    // Al montar en la parte superior, activar la transición suave tras un breve tick
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 60);
+
+    const nodo = seccionRef.current;
+    if (!nodo || typeof IntersectionObserver === "undefined") {
+      return () => clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(nodo);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <section className="relative flex min-h-dvh w-full items-center overflow-hidden bg-black text-[#F5F0E6]">
-      {/* Fondo: imagen nueva de public alineada a la derecha, decorativa, con prioridad de carga */}
+    <section
+      ref={seccionRef}
+      id="inicio"
+      className="relative flex min-h-dvh w-full items-center overflow-hidden bg-black text-[#F5F0E6]"
+    >
+      {/* Fondo: imagen nueva de public con fade-in cinematográfico y sutil zoom out */}
       {siteConfig.hero.image && (
-        <Image
-          src={siteConfig.hero.image}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-right md:object-[82%_center]"
-        />
+        <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
+          <Image
+            src={siteConfig.hero.image}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className={`object-cover object-right md:object-[82%_center] transition-all duration-1200 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform ${
+              visible
+                ? "opacity-100 scale-100 blur-0"
+                : "opacity-0 scale-105 blur-[2px]"
+            }`}
+          />
+        </div>
       )}
 
       {/* Sombra de fondo muy sutil para dar profundidad y contraste sin oscurecer al sujeto */}
       {/* 1. En celular: oscurecimiento muy leve */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-black/40 md:hidden"
+        className={`pointer-events-none absolute inset-0 bg-black/40 md:hidden transition-opacity duration-1000 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
       />
 
       {/* 2. En escritorio: degradado muy suave de izquierda a derecha */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden bg-linear-to-r from-black/60 via-black/20 via-45% to-transparent md:block"
+        className={`pointer-events-none absolute inset-0 hidden bg-linear-to-r from-black/60 via-black/20 via-45% to-transparent md:block transition-opacity duration-1000 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
       />
 
       {/* 3. Sombra superior muy tenue bajo el navbar */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-black/35 to-transparent"
+        className={`pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-black/35 to-transparent transition-opacity duration-1000 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
       />
 
       {/* Contenido principal alineado a la izquierda y centrado verticalmente */}
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-28 sm:px-10 lg:px-12">
         <div className="max-w-lg lg:max-w-xl">
-          {/* 1. Etiqueta superior en mayúsculas, texto chico, espaciado entre letras, en gris claro */}
+          {/* 1. Etiqueta superior en mayúsculas con aparición suave */}
           <p
-            style={{ animationDelay: "0ms" }}
-            className="hero-stagger font-sans text-xs font-semibold tracking-[0.22em] text-neutral-400 uppercase sm:text-sm"
+            style={{ transitionDelay: "150ms" }}
+            className={`font-sans text-xs font-semibold tracking-[0.22em] text-neutral-400 uppercase sm:text-sm transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
           >
             {siteConfig.hero.badge}
           </p>
 
-          {/* 2. Título h1 en dos líneas, mayúsculas, tipografía condensada, escalable desde 48px hasta 96px */}
+          {/* 2. Título h1 en dos líneas con aparición escalonada fluida */}
           <h1
-            style={{ animationDelay: "100ms" }}
-            className={`${oswald.className} hero-stagger mt-3 text-[48px] leading-[0.92] font-bold tracking-tight text-white uppercase sm:text-7xl md:text-8xl lg:text-[96px]`}
+            className={`${oswald.className} mt-3 text-[48px] leading-[0.92] font-bold tracking-tight text-white uppercase sm:text-7xl md:text-8xl lg:text-[96px]`}
           >
-            <span className="block">{siteConfig.hero.titleLine1}</span>
-            <span className="block">{siteConfig.hero.titleLine2}</span>
+            <span
+              style={{ transitionDelay: "280ms" }}
+              className={`block transition-all duration-800 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                visible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-6"
+              }`}
+            >
+              {siteConfig.hero.titleLine1}
+            </span>
+            <span
+              style={{ transitionDelay: "380ms" }}
+              className={`block transition-all duration-800 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                visible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-6"
+              }`}
+            >
+              {siteConfig.hero.titleLine2}
+            </span>
           </h1>
 
-          {/* 3. Descripción en gris claro, tamaño normal, ancho limitado */}
+          {/* 3. Descripción en gris claro con transición suave */}
           <p
-            style={{ animationDelay: "200ms" }}
-            className="hero-stagger mt-5 max-w-[44ch] text-base leading-relaxed text-neutral-300 sm:text-lg"
+            style={{ transitionDelay: "500ms" }}
+            className={`mt-5 max-w-[44ch] text-base leading-relaxed text-neutral-300 sm:text-lg transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+            }`}
           >
             {siteConfig.hero.description}
           </p>
 
-          {/* 4. Botón principal con borde marrón fino sin relleno, en hover se rellena de marrón con texto negro */}
+          {/* 4. Botón principal con transición suave de entrada y efecto hover intacto */}
           <div
-            style={{ animationDelay: "300ms" }}
-            className="hero-stagger mt-8"
+            style={{ transitionDelay: "620ms" }}
+            className={`mt-8 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+              visible
+                ? "opacity-100 translate-y-0 scale-100"
+                : "opacity-0 translate-y-4 scale-95"
+            }`}
           >
             <a
               href={siteConfig.hero.cta.href}
-              className="group inline-flex items-center gap-3.5 rounded border border-marron bg-transparent px-7 py-3.5 font-sans text-xs font-semibold tracking-widest text-marron uppercase transition-colors duration-250 active:scale-[0.98] hover:bg-marron hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron sm:text-sm"
+              className="group inline-flex items-center gap-3.5 rounded border border-marron bg-transparent px-7 py-3.5 font-sans text-xs font-semibold tracking-widest text-marron uppercase transition-colors duration-250 active:scale-[0.98] hover:bg-marron hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron sm:text-sm cursor-pointer"
             >
               <span>{siteConfig.hero.cta.label}</span>
               <svg
@@ -142,7 +218,7 @@ export function Hero() {
             </a>
           </div>
 
-          {/* 5. Fila de íconos de redes sociales desplazada más abajo con escalonamiento individual */}
+          {/* 5. Fila de íconos de redes sociales con escalonamiento individual suave */}
           <div className="mt-14 sm:mt-16 flex items-center gap-6">
             {siteConfig.social.map((item, idx) => (
               <a
@@ -151,8 +227,12 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={item.label}
-                style={{ animationDelay: `${400 + idx * 75}ms` }}
-                className="hero-stagger text-white/80 transition-colors duration-200 hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron"
+                style={{ transitionDelay: `${740 + idx * 80}ms` }}
+                className={`text-white/80 transition-all duration-600 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-marron focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marron ${
+                  visible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3"
+                }`}
               >
                 <IconoRedSocial red={item.red} />
               </a>

@@ -114,7 +114,7 @@ export function Servicios() {
         className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
       >
         <Image
-          src="/imagen-barberia-hero.jpg"
+          src="/fondo-servicios.jpg"
           alt=""
           fill
           sizes="100vw"
